@@ -4,12 +4,16 @@ public class ProductRepository {
     private Product[] items = new Product[0];
 
     public void save(Product item) {
-        Product[] tmp = new Product[items.length + 1];
-        for (int i = 0; i < items.length; i++) {
-            tmp[i] = items[i];
+        if (findById(item.getId()) != null) {
+            throw new AlreadyExistsException("Element with id: " + item.getId() + " is already in the repository");
+        } else {
+            Product[] tmp = new Product[items.length + 1];
+            for (int i = 0; i < items.length; i++) {
+                tmp[i] = items[i];
+            }
+            tmp[tmp.length - 1] = item;
+            items = tmp;
         }
-        tmp[tmp.length - 1] = item;
-        items = tmp;
     }
     public void removeById(int id) {
         if (findById(id) == null) {

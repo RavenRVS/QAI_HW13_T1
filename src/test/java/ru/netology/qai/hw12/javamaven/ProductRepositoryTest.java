@@ -24,6 +24,13 @@ class ProductRepositoryTest {
     }
 
     @Test
+    public void saveItemsWithIdAlreadyExists() {
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repo.save(book2);
+        });
+    }
+
+    @Test
     void removeById() {
 
         repo.removeById(3);
